@@ -9,4 +9,8 @@ public class Human {
 		this.attack = attack;
 		this.isInfected = isInfected;
 	}
+
+	public boolean isDead() {
+		return health <= 0;
+	}
 }
