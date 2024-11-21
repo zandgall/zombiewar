@@ -1,0 +1,15 @@
+plugins {
+    id 'application'
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+    }
+}
+
+application {
+    mainClass = 'com.csc422.zombiewar.Main'
+}

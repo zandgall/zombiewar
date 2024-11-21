@@ -1,0 +1,38 @@
+# IntelliJ IDEA and building stuff
+.idea/
+build/
+bin/
+out/
+
+# Language Server shenanigans
+.classpath
+.project
+
+# Gradle middleman files
+gradle/
+gradlew
+gradlew.bat
+.gradle
+.settings
+
+# Virtual machine crash logs
+hs_err_pid*
+replay_pid*
+
+# eclipse
+.metadata
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
+
+# netbeans
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+**/nbproject/
