@@ -12,9 +12,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		generateSurvivors();
-		System.out.printf("We have %d survivors trying to make it to safety%n", survivors.size());
 		generateZombies();
-		System.out.printf("But there are %d zombies waiting for them%n", zombies.size());
 
 		while(true) {
 			// Make the survivors attack, if there are no more zombies alive afterwards, end game
@@ -42,14 +40,26 @@ public class Main {
 
 		int amount = r.nextInt(6, 12);
 
+		int numChild = 0, numTeacher = 0, numSoldier = 0;
+
 		for(int i = 0; i < amount; i++) {
 			int type = r.nextInt(3);
 			switch(type) {
-				case 0 -> survivors.add(new Child());
-				case 1 -> survivors.add(new Teacher());
-				case 2 -> survivors.add(new Soldier());
+				case 0 -> {
+					survivors.add(new Child(numChild));
+					numChild++;
+				}
+				case 1 -> {
+					survivors.add(new Teacher(numTeacher));
+					numTeacher++;
+				}
+				case 2 -> {
+					survivors.add(new Soldier(numSoldier));
+					numSoldier++;
+				}
 			}
 		}
+		System.out.printf("We have %d survivors trying to make it to safety (%d children, %d teachers, %d soldiers)%n", survivors.size(), numChild, numTeacher, numSoldier);
 	}
 
 	/*
@@ -60,14 +70,22 @@ public class Main {
 		Random r = new Random(System.nanoTime());
 
 		int amount = r.nextInt(3, 9);
+		int numCommon = 0, numTank = 0;
 
 		for(int i = 0; i < amount; i++) {
 			int type = r.nextInt(2);
 			switch(type) {
-				case 0 -> zombies.add(new CommonInfected());
-				case 1 -> zombies.add(new Tank());
+				case 0 -> {
+					zombies.add(new CommonInfected(numCommon));
+					numCommon++;
+				}
+				case 1 -> {
+					zombies.add(new Tank(numTank));
+					numTank++;
+				}
 			}
 		}
+		System.out.printf("But there are %d zombies waiting for them (%d common infected, %d tank)%n", zombies.size(), numCommon, numTank);
 	}
 
 	/*
@@ -75,14 +93,23 @@ public class Main {
 	*/
 	public static void survivorsAttack() {
 		for(Survivor s : survivors) {
-			for(int i = 0; i < zombies.size(); i++) {
-				s.attack(zombies.get(i));
-				if(zombies.get(i).isDead()) {
-					zombies.remove(i);
-					i--;
+			// Attack all zombies, setting them to null if they die
+			for(int i = zombies.size() - 1; i >= 0; i--) {
+				Zombie z = zombies.get(i);
+				if(z == null)
+					continue;
+				s.attack(z);
+				if(z.isDead()) {
+					System.out.printf("%s killed %s%n", s, z);
+					zombies.set(i, null);
 				}
 			}
 		}
+
+		// remove all null zombies from the array
+		for(int i = zombies.size() - 1; i >= 0; i--)
+			if(zombies.get(i) == null)
+				zombies.remove(i);
 	}
 
 	/*
@@ -90,17 +117,30 @@ public class Main {
 	*/
 	public static void zombiesAttack() {
 		for(Zombie z : zombies) {
-			for(int i = 0; i < survivors.size(); i++) {
-				z.attack(survivors.get(i));
-				if(survivors.get(i).isDead()) {
-					survivors.remove(i);
-					i--;
+			// Attack all survivors, set survivor to null if dead
+			for(int i = survivors.size() - 1; i >= 0; i--) {
+				Survivor s = survivors.get(i);
+				if(s == null)
+					continue;
+				z.attack(s);
+				if(s.isDead()) {
+					System.out.printf("%s killed %s%n", z, s);
+					survivors.set(i, null);
 				}
 			}
 		}
+
+		// Remove all null survivors
+		for(int i = survivors.size() - 1; i >= 0; i--)
+			if(survivors.get(i) == null)
+				survivors.remove(i);
+
 	}
 
 	public static void printSurvivors() {
-		System.out.println("It seems " + survivors.size() + " have made it to safety.");
+		if(survivors.size() == 0)
+			System.out.println("None of the survivors made it.");
+		else
+			System.out.println("It seems " + survivors.size() + " have made it to safety.");
 	}
 }
