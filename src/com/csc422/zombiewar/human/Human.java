@@ -1,4 +1,4 @@
-package com.csc422.zombiewar;
+package com.csc422.zombiewar.human;
 
 public class Human {
 	protected int health, attack;
