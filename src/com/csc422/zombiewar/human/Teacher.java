@@ -1,7 +1,11 @@
 package com.csc422.zombiewar.human;
 
 public class Teacher extends Survivor {
-	public Teacher() {
-		super(50, 5);
+	public Teacher(int index) {
+		super(index, 50, 5);
+	}
+
+	public String toString() {
+		return "Teacher " + index;
 	}
 }
