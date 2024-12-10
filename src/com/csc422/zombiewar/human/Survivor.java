@@ -14,8 +14,13 @@ public class Survivor extends Human {
     }
 
     public void attack(Zombie target) {
+        if(weapon != null && Math.random() > weapon.getAccuracy()) {
+            System.out.printf("%s attacks %s with %s, but misses!%n", this, target, weapon);
+            return;
+        }
+
         int damage = weapon != null ? weapon.getDamage() : this.attack;
         target.health -= damage;
-        System.out.printf("%s attacks %s with %s, dealing %d damage%n", this, target, weapon, damage);
+        System.out.printf("%s attacks %s with %s, dealing %d damage%n", this, target, weapon == null ? "nothing" : weapon, damage);
     }
 }
