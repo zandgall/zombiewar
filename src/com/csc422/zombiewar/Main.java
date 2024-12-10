@@ -3,6 +3,7 @@ package com.csc422.zombiewar;
 import java.util.ArrayList;
 import java.util.Random;
 
+import com.csc422.zombiewar.WeaponCache.WEAPON;
 import com.csc422.zombiewar.human.*;
 
 public class Main {
@@ -37,30 +38,31 @@ public class Main {
 	*/
 	public static void generateSurvivors() {
 		Random r = new Random(System.nanoTime());
-
+	
 		int amount = r.nextInt(6, 12);
-
+	
 		int numChild = 0, numTeacher = 0, numSoldier = 0;
-
-		for(int i = 0; i < amount; i++) {
+	
+		for (int i = 0; i < amount; i++) {
+			Survivor survivor;
 			int type = r.nextInt(3);
-			switch(type) {
-				case 0 -> {
-					survivors.add(new Child(numChild));
-					numChild++;
-				}
-				case 1 -> {
-					survivors.add(new Teacher(numTeacher));
-					numTeacher++;
-				}
-				case 2 -> {
-					survivors.add(new Soldier(numSoldier));
-					numSoldier++;
-				}
+			switch (type) {
+				case 0 -> survivor = new Child(numChild++);
+				case 1 -> survivor = new Teacher(numTeacher++);
+				case 2 -> survivor = new Soldier(numSoldier++);
+				default -> throw new IllegalStateException("Unexpected value: " + type);
 			}
+	
+			// Assign a random weapon
+			WeaponCache.WEAPON randomWeapon = WEAPON.getRandomWeapon();
+			survivor.setWeapon(randomWeapon);
+			System.out.printf("%s was given a %s%n", survivor, randomWeapon);
+	
+			survivors.add(survivor);
 		}
 		System.out.printf("We have %d survivors trying to make it to safety (%d children, %d teachers, %d soldiers)%n", survivors.size(), numChild, numTeacher, numSoldier);
 	}
+	
 
 	/*
 	* Generate a random number of zombies between 3 and 9,
