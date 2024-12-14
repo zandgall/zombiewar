@@ -5,7 +5,10 @@ import java.util.Random;
 public class WeaponCache {
     public enum WEAPON {
         AXE(15, 1.00f),
-        FRYING_PAN(100, 0.50f); // Added Frying Pan with 100 damage and 50% accuracy
+        FRYING_PAN(100, 0.50f), // Added Frying Pan with 100 damage and 50% accuracy
+        CROWBAR(10, 1.00f),
+        SUBMACHINE_GUN(40, 0.7f),
+        ASSAULT_RIFLE(80, 0.6f);
 
         private final int damage;
         private final float accuracy;
