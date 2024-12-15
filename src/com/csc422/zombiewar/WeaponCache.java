@@ -9,8 +9,8 @@ public class WeaponCache {
         CROWBAR(10, 1.00f),
         SUBMACHINE_GUN(40, 0.7f),
         ASSAULT_RIFLE(80, 0.6f);
-        PISTOL(25, 0.85f) //Added Pistol with 25 damage and 85% accuracy
-        SHOTGUN(70, 0.5f) //Added shotgun with 70 damage and 50% accuracy
+        PISTOL(25, 0.85f); //Added Pistol with 25 damage and 85% accuracy
+        SHOTGUN(70, 0.5f); //Added shotgun with 70 damage and 50% accuracy
 
         private final int damage;
         private final float accuracy;
